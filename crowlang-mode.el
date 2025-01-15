@@ -50,19 +50,27 @@
 (setq crowlang--keywords
       (list
        ;; Variables:
-       "let" "var"
+       "let"
+       "var"
 
        ;; Package:
        ;; TODO: Implement when stable.
+       "module"
+       "import"
 
        ;; Control Statements:
        "fn"
        "match"
-       "if" "else" "elif"
+       "if"
+       "else"
+       "elif"
        "loop"
 
        ;; Jump:
-       "break" "continue" "defer" "return"
+       "break"
+       "continue"
+       "defer"
+       "return"
        )
       ;; "List of keywords for crowlang."
       )
@@ -71,6 +79,7 @@
       '(
 	("\\<\\(TODO\\|FIXME\\|IMPORTANT\\)" . font-lock-warning-face)
 
+	;; TODO: Figure these out:
 	;; (";" . 'font-lock-type-face)
 	;; (";" . 'font-lock-builtin)
 
@@ -95,7 +104,7 @@
 	("\\<bool\\>" . font-lock-type-face)
 
 	;; TODO: Simplify
-	("\\([+\\-*/%^&|<>!=]=?\\|==\\|!=\\|&&\\|\\|\\|\\?<\\|>\\|<<\\|>>\\)" . font-lock-operator-face)
+	;;("\\([+\\-*/%^&|<>!=]=?\\|==\\|!=\\|&&\\|\\|\\|\\?<\\|>\\|<<\\|>>\\)" . font-lock-operator-face)
 
 	;; Builin functions:
 	("\\<\\(print\\|println\\)" . font-lock-builtin-face)
@@ -104,6 +113,11 @@
       )
 
 ;;; Functions:
+(defun crowlang--calculate-indentation ()
+  "Return the column to which the current line should be indented."
+  (* tab-width (min (car (syntax-ppss (line-beginning-position)))
+                    (car (syntax-ppss (line-end-position))))))
+
 (defun crowlang--indent-line ()
   "Indent current line of Crowlang code."
   (interactive)
@@ -115,18 +129,13 @@
       (indent-line-to indent))
     ))
 
-(defun crowlang--calculate-indentation ()
-  "Return the column to which the current line should be indented."
-  (* tab-width (min (car (syntax-ppss (line-beginning-position)))
-                    (car (syntax-ppss (line-end-position))))))
-
 ;;; Define generic mode:
 (define-generic-mode 'crowlang-mode
   crowlang--comments           ; Comments.
   crowlang--keywords           ; Keywords.
   crowlang--font-lock-defaults ; Font-lock settings.
   '("\\.cw$")                  ; Activate the mode only for crowlang source files.
-  (list		               ; function list, for indentation
+  (list		               ; function list, for indentation.
    (lambda ()
      (setq-local tab-width 2)
      (setq-local indent-tabs-mode nil)

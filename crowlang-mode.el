@@ -59,7 +59,7 @@
        "import"
 
        ;; Control Statements:
-       "fn"
+       "func"
        "match"
        "if"
        "else"

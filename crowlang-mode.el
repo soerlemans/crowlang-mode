@@ -66,6 +66,10 @@
        "elif"
        "loop"
 
+			 ;; Meta:
+       "declare"
+       "macro"
+
        ;; Jump:
        "break"
        "continue"
@@ -77,38 +81,38 @@
 
 (setq crowlang--font-lock-defaults
       '(
-	("\\<\\(TODO\\|FIXME\\|IMPORTANT\\)" . font-lock-warning-face)
+				("\\<\\(TODO\\|FIXME\\|IMPORTANT\\)" . font-lock-warning-face)
 
-	;; TODO: Figure these out:
-	;; (";" . 'font-lock-type-face)
-	;; (";" . 'font-lock-builtin)
+				;; TODO: Figure these out:
+				;; (";" . 'font-lock-type-face)
+				;; (";" . 'font-lock-builtin)
 
-	;; ("=" . font-lock-operator)
-	;; ("\\*" . font-lock-operator)
-	;; ("\\*=" . font-lock-operator)
-	;; ("/" . font-lock-operator)
+				;; ("=" . font-lock-operator)
+				;; ("\\*" . font-lock-operator)
+				;; ("\\*=" . font-lock-operator)
+				;; ("/" . font-lock-operator)
 
-	("\\<\\(True\\|False\\)\\>" . font-lock-constant-face)
+				("\\<\\(True\\|False\\)\\>" . font-lock-constant-face)
 
-	("\"\\.\\*\\?" . font-lock-string-face)
-	("\\<[a-zA-Z_][a-zA-Z0-9_]+" . font-lock-variable-name-face)
-	;; ("[a-zA-Z][a-zA-Z0-9]+" . font-lock-variable-name-face)
-	;; ("\\<[a-zA-Z_][a-zA-Z0-9_]*\\>" . font-lock-variable-name-face)
+				("\"\\.\\*\\?" . font-lock-string-face)
+				("\\<[a-zA-Z_][a-zA-Z0-9_]+" . font-lock-variable-name-face)
+				;; ("[a-zA-Z][a-zA-Z0-9]+" . font-lock-variable-name-face)
+				;; ("\\<[a-zA-Z_][a-zA-Z0-9_]*\\>" . font-lock-variable-name-face)
 
-	;; Type font locks
-	("\\<void\\>" . font-lock-type-face)
-	("\\<\\(f32\\|f64\\)\\>" . font-lock-type-face)
-	("\\<\\(int\\|i8\\|i16\\|i32\\|i64\\)\\>" . font-lock-type-face)
-	("\\<\\(uint\\|u8\\|u16\\|u32\\|u64\\)\\>" . font-lock-type-face)
-	("\\<string\\>" . font-lock-type-face)
-	("\\<bool\\>" . font-lock-type-face)
+				;; Type font locks
+				("\\<void\\>" . font-lock-type-face)
+				("\\<\\(f32\\|f64\\)\\>" . font-lock-type-face)
+				("\\<\\(int\\|i8\\|i16\\|i32\\|i64\\|isize\\)\\>" . font-lock-type-face)
+				("\\<\\(uint\\|u8\\|u16\\|u32\\|u64\\|usize\\)\\>" . font-lock-type-face)
+				("\\<string\\>" . font-lock-type-face)
+				("\\<bool\\>" . font-lock-type-face)
 
-	;; TODO: Simplify
-	;;("\\([+\\-*/%^&|<>!=]=?\\|==\\|!=\\|&&\\|\\|\\|\\?<\\|>\\|<<\\|>>\\)" . font-lock-operator-face)
+				;; TODO: Simplify
+				;;("\\([+\\-*/%^&|<>!=]=?\\|==\\|!=\\|&&\\|\\|\\|\\?<\\|>\\|<<\\|>>\\)" . font-lock-operator-face)
 
-	;; Builin functions:
-	("\\<\\(print\\|println\\)" . font-lock-builtin-face)
-	)
+				;; Builin functions:
+				("\\<\\(print\\|println\\)" . font-lock-builtin-face)
+				)
       ;;  "List of font lock settings for crowlang."
       )
 
@@ -125,7 +129,7 @@
         (indent (condition-case nil (max (crowlang--calculate-indentation) 0)
                   (error 0))))
     (if savep
-	(save-excursion (indent-line-to indent))
+				(save-excursion (indent-line-to indent))
       (indent-line-to indent))
     ))
 

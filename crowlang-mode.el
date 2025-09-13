@@ -57,6 +57,7 @@
        ;; TODO: Implement when stable.
        "module"
        "import"
+       "export"
 
        ;; Control Statements:
        "func"
@@ -65,6 +66,12 @@
        "else"
        "elif"
        "loop"
+
+			 ;; Typing:
+			 "struct"
+			 "self"
+			 "enum"
+			 "interface"
 
 			 ;; Meta:
        "declare"
@@ -81,37 +88,74 @@
 
 (setq crowlang--font-lock-defaults
       '(
-				("\\<\\(TODO\\|FIXME\\|IMPORTANT\\)" . font-lock-warning-face)
-
-				;; TODO: Figure these out:
-				;; (";" . 'font-lock-type-face)
-				;; (";" . 'font-lock-builtin)
-
-				;; ("=" . font-lock-operator)
-				;; ("\\*" . font-lock-operator)
-				;; ("\\*=" . font-lock-operator)
-				;; ("/" . font-lock-operator)
-
-				("\\<\\(True\\|False\\)\\>" . font-lock-constant-face)
-
-				("\"\\.\\*\\?" . font-lock-string-face)
-				("\\<[a-zA-Z_][a-zA-Z0-9_]+" . font-lock-variable-name-face)
-				;; ("[a-zA-Z][a-zA-Z0-9]+" . font-lock-variable-name-face)
-				;; ("\\<[a-zA-Z_][a-zA-Z0-9_]*\\>" . font-lock-variable-name-face)
-
-				;; Type font locks
+				;; Types:
 				("\\<void\\>" . font-lock-type-face)
-				("\\<\\(f32\\|f64\\)\\>" . font-lock-type-face)
-				("\\<\\(int\\|i8\\|i16\\|i32\\|i64\\|isize\\)\\>" . font-lock-type-face)
-				("\\<\\(uint\\|u8\\|u16\\|u32\\|u64\\|usize\\)\\>" . font-lock-type-face)
+
+				("\\<f32\\>" . font-lock-type-face)
+				("\\<f64\\>" . font-lock-type-face)
+
+				("\\<int\\>" . font-lock-type-face)
+				("\\<i8\\>" . font-lock-type-face)
+				("\\<i16\\>" . font-lock-type-face)
+				("\\<i32\\>" . font-lock-type-face)
+				("\\<i64\\>" . font-lock-type-face)
+				("\\<isize\\>" . font-lock-type-face)
+
+				("\\<uint\\>" . font-lock-type-face)
+				("\\<u8\\>" . font-lock-type-face)
+				("\\<u16\\>" . font-lock-type-face)
+				("\\<u32\\>" . font-lock-type-face)
+				("\\<u64\\>" . font-lock-type-face)
+				("\\<usize\\>" . font-lock-type-face)
+
 				("\\<string\\>" . font-lock-type-face)
 				("\\<bool\\>" . font-lock-type-face)
 
-				;; TODO: Simplify
-				;;("\\([+\\-*/%^&|<>!=]=?\\|==\\|!=\\|&&\\|\\|\\|\\?<\\|>\\|<<\\|>>\\)" . font-lock-operator-face)
+				;;
+				("\\<\\(TODO\\|FIXME\\|IMPORTANT\\)" . font-lock-warning-face)
 
 				;; Builin functions:
-				("\\<\\(print\\|println\\)" . font-lock-builtin-face)
+				("\\<println\\|print\\>" . font-lock-builtin-face)
+
+				("^#[a-zA-Z_][a-zA-Z0-9_]*". font-lock-preprocessor-face)
+
+				;; TODO: Figure these out:
+				;; ("=" . font-lock-operator)
+
+				;; Attributes
+				;; TODO: We still need to highlight all the attribute names.
+				;; Instead of just the first one.
+				("^\\[\\[[ \t]*\\([a-zA-Z_][a-zA-Z0-9_]*\\)[ \t]*\\(?:([^)]*)\\)?[ \t]*\\(?:, ?\\|\\]\\]\\)" 1 font-lock-preprocessor-face)
+				;; ("^\\[\\[" 1 font-lock-preprocessor-face)
+
+				;;("\\[\\[\\(.*?\\)\\]\\]" 1 font-lock-preprocessor-face)
+				;; ("\\[\\[[ \t]+\\([a-zA-Z_][a-zA-Z0-9_]*\\)\\(?:\\s-*(.*?)\\)?\\s-*\\(?:,\\|\\]\\]\\)" 1 font-lock-preprocessor-face)
+
+				;; Constants
+				("\\<\\(True\\|False\\)\\>" . font-lock-constant-face)
+
+				("\"\\.\\*\\?" . font-lock-string-face)
+
+				;; (,(regexp-opt '("void"
+				;; 								"f32" "f64"
+				;; 								"int"  "i8" "i16" "i32" "i64" "isize"
+				;; 								"uint" "u8" "u16" "u32" "u64" "usize"
+				;; 								"string"
+				;; 								"bool") 'words) . font-lock-type-face)
+
+				;; TODO: Simplify
+				;; ("\\([+\\-*/%^&|<>!=]=?\\|==\\|!=\\|&&\\|\\|\\|\\?<\\|>\\|<<\\|>>\\)" . font-lock-operator-face)
+
+				;; Typing:
+				("enum[ \t]+\\([a-zA-Z_][a-zA-Z0-9_]*\\)" 1 font-lock-type-face)
+				("struct[ \t]+\\([a-zA-Z_][a-zA-Z0-9_]*\\)" 1 font-lock-type-face)
+				("interface[ \t]+\\([a-zA-Z_][a-zA-Z0-9_]*\\)" 1 font-lock-type-face)
+
+				;; Functions:
+				("func[ \t]+\\([a-zA-Z_][a-zA-Z0-9_]*\\)" 1 font-lock-function-name-face)
+
+				;; Variable names
+				("\\<[a-zA-Z_][a-zA-Z0-9_]*\\>" . font-lock-variable-name-face)
 				)
       ;;  "List of font lock settings for crowlang."
       )
